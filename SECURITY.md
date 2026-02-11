@@ -179,6 +179,7 @@ We actively monitor and update dependencies for security vulnerabilities:
 ### Frontend
 - Next.js: 15.2.9+ (patched multiple critical vulnerabilities)
 - React: 19.0.0+
+- Axios: 1.13.5+ (patched SSRF and DoS vulnerabilities)
 - Other dependencies are regularly updated
 
 ## Disclosure Policy
