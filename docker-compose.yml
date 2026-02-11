@@ -1,0 +1,61 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      target: development
+    container_name: biz-bot-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+      - ./node_modules:/app/node_modules
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://bizbot:bizbot123@postgres:5432/bizbot
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - biz-bot-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: biz-bot-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: bizbot
+      POSTGRES_USER: bizbot
+      POSTGRES_PASSWORD: bizbot123
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - biz-bot-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: biz-bot-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - biz-bot-network
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  biz-bot-network:
+    driver: bridge

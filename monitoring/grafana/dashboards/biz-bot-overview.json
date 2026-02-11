@@ -1,0 +1,56 @@
+{
+  "dashboard": {
+    "title": "Biz-Bot Overview",
+    "tags": ["biz-bot", "overview"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "title": "Application Status",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+        "targets": [{
+          "expr": "up{job=\"biz-bot-app\"}",
+          "legendFormat": "Status"
+        }]
+      },
+      {
+        "title": "Request Rate",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+        "targets": [{
+          "expr": "rate(http_requests_total[5m])",
+          "legendFormat": "{{method}} {{status}}"
+        }]
+      },
+      {
+        "title": "Response Time (95th percentile)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+        "targets": [{
+          "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+          "legendFormat": "95th percentile"
+        }]
+      },
+      {
+        "title": "Error Rate",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+        "targets": [{
+          "expr": "rate(http_requests_total{status=~\"5..\"}[5m])",
+          "legendFormat": "5xx errors"
+        }]
+      },
+      {
+        "title": "Memory Usage",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12},
+        "targets": [{
+          "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100",
+          "legendFormat": "Memory %"
+        }]
+      }
+    ],
+    "schemaVersion": 27,
+    "version": 1
+  }
+}

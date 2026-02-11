@@ -1,0 +1,179 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      target: production
+    container_name: biz-bot-app
+    restart: always
+    expose:
+      - "3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://bizbot:${POSTGRES_PASSWORD}@postgres:5432/bizbot
+      - REDIS_URL=redis://redis:6379
+    secrets:
+      - twilio_account_sid
+      - twilio_auth_token
+      - elevenlabs_api_key
+      - openai_api_key
+      - jwt_secret
+      - encryption_key
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - biz-bot-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: biz-bot-postgres
+    restart: always
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_DB: bizbot
+      POSTGRES_USER: bizbot
+    secrets:
+      - source: postgres_password
+        target: POSTGRES_PASSWORD
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - biz-bot-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bizbot -d bizbot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: biz-bot-redis
+    restart: always
+    expose:
+      - "6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    networks:
+      - biz-bot-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: biz-bot-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - nginx-logs:/var/log/nginx
+    depends_on:
+      - app
+    networks:
+      - biz-bot-network
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: biz-bot-prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - biz-bot-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: biz-bot-grafana
+    restart: always
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - biz-bot-network
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: biz-bot-node-exporter
+    restart: always
+    expose:
+      - "9100"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    networks:
+      - biz-bot-network
+
+secrets:
+  twilio_account_sid:
+    file: ./secrets/twilio_account_sid.txt
+  twilio_auth_token:
+    file: ./secrets/twilio_auth_token.txt
+  elevenlabs_api_key:
+    file: ./secrets/elevenlabs_api_key.txt
+  openai_api_key:
+    file: ./secrets/openai_api_key.txt
+  jwt_secret:
+    file: ./secrets/jwt_secret.txt
+  encryption_key:
+    file: ./secrets/encryption_key.txt
+  postgres_password:
+    file: ./secrets/postgres_password.txt
+
+volumes:
+  postgres-data:
+  redis-data:
+  prometheus-data:
+  grafana-data:
+  nginx-logs:
+
+networks:
+  biz-bot-network:
+    driver: bridge

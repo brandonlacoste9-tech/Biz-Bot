@@ -1,0 +1,58 @@
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+README.md
+*.md
+
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.crt
+
+# Logs
+logs
+*.log
+
+# Build artifacts
+dist
+build
+.next
+out
+
+# Development files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Testing
+coverage
+.nyc_output
+test-results
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Temporary files
+tmp
+temp
+*.tmp
