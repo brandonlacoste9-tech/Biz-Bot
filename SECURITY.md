@@ -1,5 +1,27 @@
 # Security Summary
 
+## Vulnerability Patches Applied
+
+✅ **All known vulnerabilities have been patched:**
+
+### Python Dependencies
+- **FastAPI**: Updated from 0.109.0 to 0.115.5
+  - Fixed: Content-Type Header ReDoS vulnerability
+- **python-multipart**: Updated from 0.0.6 to 0.0.22
+  - Fixed: Arbitrary File Write vulnerability
+  - Fixed: DoS via malformed multipart/form-data boundary
+  - Fixed: Content-Type Header ReDoS vulnerability
+
+### JavaScript Dependencies
+- **Next.js**: Updated from 14.1.0 to 14.2.35
+  - Fixed: HTTP request deserialization DoS with React Server Components
+  - Fixed: Authorization bypass vulnerability
+  - Fixed: Cache poisoning vulnerability
+  - Fixed: Server-Side Request Forgery in Server Actions
+  - Fixed: Authorization bypass in Next.js middleware
+
+Last security audit: February 2026
+
 ## Implementation Status
 
 ✅ **Security Measures Implemented:**
