@@ -1,0 +1,34 @@
+# Docker Compose Override Example
+# Copy this file to docker-compose.override.yml for local customizations
+# This file is automatically used when running `docker-compose up`
+
+version: '3.9'
+
+services:
+  app:
+    # Enable hot-reload for development
+    volumes:
+      - ./src:/app/src:cached
+      - ./package.json:/app/package.json:cached
+    
+    # Override environment variables for local development
+    environment:
+      - NODE_ENV=development
+      - LOG_LEVEL=debug
+    
+    # Expose additional ports for debugging
+    ports:
+      - "9229:9229"  # Node.js debugger
+    
+    # Override command to enable debugging
+    # command: ["node", "--inspect=0.0.0.0:9229", "src/server.js"]
+
+  postgres:
+    # Expose port for local database access
+    ports:
+      - "5432:5432"
+
+  redis:
+    # Expose port for local Redis access
+    ports:
+      - "6379:6379"
