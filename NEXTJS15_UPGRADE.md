@@ -1,23 +1,27 @@
-# Next.js 15.2.3 Upgrade Notes
+# Next.js 15.2.9 Upgrade Notes
 
 ## Version Change
 - **From:** Next.js 14.1.0
-- **To:** Next.js 15.2.3 (Latest Stable)
-- **Reason:** Security patches for multiple critical vulnerabilities
+- **To:** Next.js 15.2.9 (FULLY PATCHED)
+- **Reason:** Security patches for CRITICAL vulnerabilities including RCE
 
-## Security Vulnerabilities Patched
+## Critical Vulnerabilities Patched in 15.2.9
 
-### 15.0.8 → 15.2.3
-Additional vulnerabilities patched:
-- ✅ DoS via cache poisoning (affects 15.0.4-canary.51 to < 15.1.8)
-- ✅ Authorization bypass in middleware (affects 15.0.0 to < 15.2.3)
+### 15.2.3 → 15.2.9
+**CRITICAL vulnerabilities in 15.2.3:**
+1. ✅ **RCE in React flight protocol** (15.2.0-canary.0 to < 15.2.6) - **CRITICAL**
+2. ✅ **DoS with Server Components** (15.2.0-canary.0 to < 15.2.7)
+3. ✅ **HTTP request deserialization DoS** (15.2.0-canary.0 to < 15.2.9)
 
 ### Complete List of Vulnerabilities Addressed
-1. HTTP request deserialization DoS with Server Components
-2. DoS via cache poisoning
-3. Authorization bypass in middleware (multiple versions)
-4. Cache poisoning vulnerabilities
-5. Server-Side Request Forgery in Server Actions
+1. ✅ Remote Code Execution (RCE) in React flight protocol - **CRITICAL**
+2. ✅ HTTP request deserialization DoS with Server Components
+3. ✅ DoS via cache poisoning
+4. ✅ Authorization bypass in middleware (multiple versions)
+5. ✅ Cache poisoning vulnerabilities
+6. ✅ Server-Side Request Forgery in Server Actions
+
+**Version 15.2.9 is the minimum version that patches ALL known vulnerabilities in the 15.2.x series.**
 
 ## Breaking Changes & Compatibility
 
