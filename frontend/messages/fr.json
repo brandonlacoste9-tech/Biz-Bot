@@ -1,0 +1,50 @@
+{
+  "home": {
+    "tagline": "Plateforme d'automatisation multi-locataire pour les PME du Québec",
+    "login": "Connexion",
+    "loginDescription": "Accédez à votre tableau de bord",
+    "getStarted": "Commencer",
+    "getStartedDescription": "Créez votre compte d'entreprise",
+    "features": {
+      "whatsapp": "Intégration WhatsApp",
+      "whatsappDesc": "Automatisez les conversations clients",
+      "booking": "Réservation intelligente",
+      "bookingDesc": "Gérez facilement les rendez-vous",
+      "automation": "Automatisation IA",
+      "automationDesc": "Support client 24/7"
+    }
+  },
+  "auth": {
+    "login": "Connexion",
+    "email": "Courriel",
+    "sendMagicLink": "Envoyer le lien magique",
+    "checkEmail": "Vérifiez votre courriel",
+    "magicLinkSent": "Nous vous avons envoyé un lien magique pour vous connecter",
+    "verifying": "Vérification...",
+    "loginSuccess": "Connexion réussie!"
+  },
+  "onboarding": {
+    "title": "Bienvenue sur Biz-Bot",
+    "subtitle": "Configurons votre entreprise",
+    "businessName": "Nom de l'entreprise",
+    "businessSlug": "Identifiant unique",
+    "email": "Courriel",
+    "phone": "Numéro de téléphone",
+    "continue": "Continuer",
+    "back": "Retour",
+    "finish": "Terminer la configuration"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "welcome": "Bon retour",
+    "bookings": "Réservations",
+    "faqs": "FAQs",
+    "settings": "Paramètres",
+    "logout": "Déconnexion",
+    "stats": {
+      "totalBookings": "Total des réservations",
+      "pendingBookings": "En attente",
+      "totalFAQs": "Articles FAQ"
+    }
+  }
+}

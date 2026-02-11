@@ -1,0 +1,50 @@
+{
+  "home": {
+    "tagline": "Multi-tenant automation platform for Quebec SMBs",
+    "login": "Login",
+    "loginDescription": "Access your dashboard",
+    "getStarted": "Get Started",
+    "getStartedDescription": "Create your business account",
+    "features": {
+      "whatsapp": "WhatsApp Integration",
+      "whatsappDesc": "Automate customer conversations",
+      "booking": "Smart Booking",
+      "bookingDesc": "Manage appointments easily",
+      "automation": "AI Automation",
+      "automationDesc": "24/7 customer support"
+    }
+  },
+  "auth": {
+    "login": "Login",
+    "email": "Email",
+    "sendMagicLink": "Send Magic Link",
+    "checkEmail": "Check your email",
+    "magicLinkSent": "We've sent you a magic link to log in",
+    "verifying": "Verifying...",
+    "loginSuccess": "Login successful!"
+  },
+  "onboarding": {
+    "title": "Welcome to Biz-Bot",
+    "subtitle": "Let's set up your business",
+    "businessName": "Business Name",
+    "businessSlug": "Business Slug",
+    "email": "Email",
+    "phone": "Phone Number",
+    "continue": "Continue",
+    "back": "Back",
+    "finish": "Finish Setup"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "bookings": "Bookings",
+    "faqs": "FAQs",
+    "settings": "Settings",
+    "logout": "Logout",
+    "stats": {
+      "totalBookings": "Total Bookings",
+      "pendingBookings": "Pending",
+      "totalFAQs": "FAQ Items"
+    }
+  }
+}
