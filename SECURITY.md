@@ -177,8 +177,8 @@ We actively monitor and update dependencies for security vulnerabilities:
 - Other dependencies are regularly updated
 
 ### Frontend
-- Next.js: 15.0.8+ (patched HTTP deserialization DoS)
-- React: 18.2.0+
+- Next.js: 15.2.9+ (patched multiple critical vulnerabilities)
+- React: 19.0.0+
 - Other dependencies are regularly updated
 
 ## Disclosure Policy
