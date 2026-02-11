@@ -16,7 +16,7 @@ async def create_tenant(tenant: TenantCreate, db: Session = Depends(get_db)):
     if existing:
         raise HTTPException(status_code=400, detail="Tenant slug already exists")
     
-    db_tenant = TenantModel(**tenant.dict())
+    db_tenant = TenantModel(**tenant.model_dump())
     db.add(db_tenant)
     db.commit()
     db.refresh(db_tenant)

@@ -11,7 +11,7 @@ router = APIRouter()
 @router.post("/", response_model=FAQ)
 async def create_faq(faq: FAQCreate, db: Session = Depends(get_db)):
     """Create a new FAQ"""
-    db_faq = FAQModel(**faq.dict())
+    db_faq = FAQModel(**faq.model_dump())
     db.add(db_faq)
     db.commit()
     db.refresh(db_faq)
@@ -54,7 +54,7 @@ async def update_faq(
     if not faq:
         raise HTTPException(status_code=404, detail="FAQ not found")
     
-    update_data = faq_update.dict(exclude_unset=True)
+    update_data = faq_update.model_dump(exclude_unset=True)
     for field, value in update_data.items():
         setattr(faq, field, value)
     

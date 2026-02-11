@@ -77,7 +77,7 @@ async def register_user(user_data: UserCreate, db: Session = Depends(get_db)):
         )
     
     # Create user
-    user = UserModel(**user_data.dict())
+    user = UserModel(**user_data.model_dump())
     db.add(user)
     db.commit()
     db.refresh(user)

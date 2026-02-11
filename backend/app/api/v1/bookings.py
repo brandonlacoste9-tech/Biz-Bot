@@ -11,7 +11,7 @@ router = APIRouter()
 @router.post("/", response_model=Booking)
 async def create_booking(booking: BookingCreate, db: Session = Depends(get_db)):
     """Create a new booking"""
-    db_booking = BookingModel(**booking.dict())
+    db_booking = BookingModel(**booking.model_dump())
     db.add(db_booking)
     db.commit()
     db.refresh(db_booking)
@@ -52,7 +52,7 @@ async def update_booking(
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found")
     
-    update_data = booking_update.dict(exclude_unset=True)
+    update_data = booking_update.model_dump(exclude_unset=True)
     for field, value in update_data.items():
         setattr(booking, field, value)
     
