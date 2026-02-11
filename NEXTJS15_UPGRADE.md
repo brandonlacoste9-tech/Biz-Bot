@@ -1,9 +1,23 @@
-# Next.js 15 Upgrade Notes
+# Next.js 15.2.3 Upgrade Notes
 
 ## Version Change
 - **From:** Next.js 14.1.0
-- **To:** Next.js 15.0.8
-- **Reason:** Security patch for critical DoS vulnerability
+- **To:** Next.js 15.2.3 (Latest Stable)
+- **Reason:** Security patches for multiple critical vulnerabilities
+
+## Security Vulnerabilities Patched
+
+### 15.0.8 → 15.2.3
+Additional vulnerabilities patched:
+- ✅ DoS via cache poisoning (affects 15.0.4-canary.51 to < 15.1.8)
+- ✅ Authorization bypass in middleware (affects 15.0.0 to < 15.2.3)
+
+### Complete List of Vulnerabilities Addressed
+1. HTTP request deserialization DoS with Server Components
+2. DoS via cache poisoning
+3. Authorization bypass in middleware (multiple versions)
+4. Cache poisoning vulnerabilities
+5. Server-Side Request Forgery in Server Actions
 
 ## Breaking Changes & Compatibility
 

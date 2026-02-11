@@ -13,16 +13,17 @@
   - Fixed: Content-Type Header ReDoS vulnerability
 
 ### JavaScript Dependencies
-- **Next.js**: Updated from 14.1.0 to 15.0.8 (CRITICAL UPGRADE)
+- **Next.js**: Updated from 14.1.0 to 15.2.3 (LATEST STABLE)
   - Fixed: HTTP request deserialization DoS with React Server Components (CRITICAL)
-  - Fixed: Authorization bypass vulnerability
-  - Fixed: Cache poisoning vulnerability
+  - Fixed: DoS via cache poisoning vulnerability
+  - Fixed: Authorization bypass in middleware (multiple versions)
+  - Fixed: Cache poisoning vulnerabilities
   - Fixed: Server-Side Request Forgery in Server Actions
-  - Fixed: Authorization bypass in Next.js middleware
-  - **Note**: Upgraded to Next.js 15 to fully address DoS vulnerabilities
+  - **Note**: Upgraded to Next.js 15.2.3 (latest stable) to fully address all vulnerabilities
   - **React**: Also upgraded to React 19 (required by Next.js 15)
 
 Last security audit: February 2026
+Latest stable versions confirmed and verified.
 
 ## Implementation Status
 
