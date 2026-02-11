@@ -39,27 +39,3 @@ scrape_configs:
       - targets: ['node-exporter:9100']
         labels:
           service: 'system'
-
-  # PostgreSQL exporter (if added)
-  - job_name: 'postgres'
-    static_configs:
-      - targets: ['postgres-exporter:9187']
-        labels:
-          service: 'database'
-    scrape_interval: 30s
-
-  # Redis exporter (if added)
-  - job_name: 'redis'
-    static_configs:
-      - targets: ['redis-exporter:9121']
-        labels:
-          service: 'cache'
-    scrape_interval: 30s
-
-  # Nginx metrics (if nginx-prometheus-exporter is added)
-  - job_name: 'nginx'
-    static_configs:
-      - targets: ['nginx-exporter:9113']
-        labels:
-          service: 'proxy'
-    scrape_interval: 30s

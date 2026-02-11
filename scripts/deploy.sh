@@ -47,10 +47,11 @@ else
         ./ "$VPS_USER@$VPS_IP:$DEPLOY_PATH/"
 fi
 
-# Step 2: Setup SSL certificates (if needed)
+# Step 2: Check SSL certificates (if needed)
 echo -e "${GREEN}Step 2: Checking SSL certificates...${NC}"
 run_command "cd $DEPLOY_PATH && if [ ! -f nginx/ssl/fullchain.pem ]; then \
-    echo 'SSL certificates not found. Please run setup-ssl.sh first'; \
+    echo 'ERROR: SSL certificates not found. Please run setup-ssl.sh first'; \
+    exit 1; \
 fi"
 
 # Step 3: Build Docker images

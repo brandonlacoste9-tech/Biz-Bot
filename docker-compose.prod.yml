@@ -43,9 +43,9 @@ services:
     environment:
       POSTGRES_DB: bizbot
       POSTGRES_USER: bizbot
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     secrets:
-      - source: postgres_password
-        target: POSTGRES_PASSWORD
+      - postgres_password
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql
@@ -65,7 +65,8 @@ services:
       - "6379"
     volumes:
       - redis-data:/data
-    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+      - ./scripts/redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
     networks:
       - biz-bot-network
     healthcheck:
