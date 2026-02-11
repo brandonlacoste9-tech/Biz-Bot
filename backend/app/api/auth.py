@@ -10,6 +10,35 @@ import logging
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
+# Dependency to get current user from token
+from fastapi.security import HTTPBearer
+from fastapi.security.http import HTTPAuthorizationCredentials
+
+security = HTTPBearer()
+
+async def get_current_user_dep(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db)
+) -> User:
+    """Dependency to get current user from JWT token"""
+    from app.core.security import verify_token
+    
+    token_data = verify_token(credentials.credentials)
+    if not token_data:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication credentials"
+        )
+    
+    user = db.query(User).filter(User.id == token_data.get("user_id")).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    
+    return user
+
 def send_magic_link_email(email: str, token: str, frontend_url: str):
     """
     Send magic link email (placeholder - integrate with email service)
@@ -135,31 +164,3 @@ async def get_current_user(
         "access_token": "",
         "token_type": "bearer"
     }
-
-# Dependency to get current user from token
-from fastapi.security import HTTPBearer, HTTPAuthCredentials
-
-security = HTTPBearer()
-
-async def get_current_user_dep(
-    credentials: HTTPAuthCredentials = Depends(security),
-    db: Session = Depends(get_db)
-) -> User:
-    """Dependency to get current user from JWT token"""
-    from app.core.security import verify_token
-    
-    token_data = verify_token(credentials.credentials)
-    if not token_data:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials"
-        )
-    
-    user = db.query(User).filter(User.id == token_data.get("user_id")).first()
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found"
-        )
-    
-    return user

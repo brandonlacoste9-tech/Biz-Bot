@@ -12,17 +12,9 @@ router = APIRouter()
 @router.post("/", response_model=BookingResponse, status_code=status.HTTP_201_CREATED)
 async def create_booking(
     booking: BookingCreate,
-    db: Session = Depends(get_db),
-    current_user: Optional[User] = None
+    db: Session = Depends(get_db)
 ):
-    """Create a new booking (public or authenticated)"""
-    
-    # If authenticated, verify tenant access
-    if current_user and current_user.tenant_id != booking.tenant_id:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not authorized to create booking for this tenant"
-        )
+    """Create a new booking (public endpoint - no auth required)"""
     
     db_booking = Booking(**booking.model_dump())
     db.add(db_booking)
