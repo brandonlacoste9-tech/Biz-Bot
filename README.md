@@ -244,14 +244,16 @@ See `.env.example` for all available configuration options:
 ## Production Deployment
 
 ### Security Checklist
-- [ ] Change all default secrets in `.env`
-- [ ] Use strong SECRET_KEY and MAGIC_LINK_SECRET
-- [ ] Configure CORS properly
+- [ ] Generate and set strong SECRET_KEY and MAGIC_LINK_SECRET (use `openssl rand -hex 32`)
+- [ ] Configure CORS properly for production domain
 - [ ] Use HTTPS for all endpoints
 - [ ] Set up proper firewall rules
 - [ ] Enable database backups
 - [ ] Configure proper logging
 - [ ] Set up monitoring and alerts
+- [ ] Consider implementing httpOnly cookies for authentication tokens
+- [ ] Enable Content Security Policy headers
+- [ ] Review and update all default credentials
 
 ### Docker Production Build
 

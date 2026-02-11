@@ -46,7 +46,7 @@ echo "✅ Backend is ready!"
 
 # Initialize database with seed data
 echo "🌱 Seeding database..."
-docker-compose exec -T backend python -m app.utils.seed_data
+docker-compose exec backend python -m app.utils.seed_data
 
 echo ""
 echo "✅ Setup complete!"

@@ -10,6 +10,8 @@ export const apiClient = axios.create({
 })
 
 // Add token to requests if available
+// NOTE: For production, consider using httpOnly cookies instead of localStorage
+// to protect against XSS attacks. Current implementation is for development ease.
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) {

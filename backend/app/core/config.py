@@ -9,8 +9,8 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://localhost:6379/0"
     
     # Security
-    SECRET_KEY: str = "dev_secret_key_change_in_production"
-    MAGIC_LINK_SECRET: str = "magic_link_secret_change_in_production"
+    SECRET_KEY: str
+    MAGIC_LINK_SECRET: str
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     MAGIC_LINK_EXPIRE_MINUTES: int = 15

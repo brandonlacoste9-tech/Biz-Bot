@@ -84,7 +84,7 @@ async def request_magic_link(
         send_magic_link_email,
         request.email,
         token,
-        "http://localhost:3000"
+        settings.FRONTEND_URL
     )
     
     return {"message": "Magic link sent to your email"}

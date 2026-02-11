@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Request, HTTPException, status
+from fastapi.responses import Response
 from sqlalchemy.orm import Session
 from app.core.database import SessionLocal
 from app.models.models import Booking, Tenant
@@ -62,5 +63,3 @@ async def handle_twilio_whatsapp(request: Request):
     except Exception as e:
         logger.error(f"Error processing WhatsApp webhook: {e}")
         raise HTTPException(status_code=500, detail="Error processing webhook")
-
-from fastapi.responses import Response
